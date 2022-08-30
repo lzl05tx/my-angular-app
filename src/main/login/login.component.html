@@ -5,10 +5,10 @@
       <span>积分墙管理系统</span>
     </li>
     <li>
-      <x-input formControlName="account" icon="ado-user" iconLayout="left"></x-input>
+      <x-input formControlName="account" icon="ado-user" iconLayout="left" placeholder="请输入登录邮箱"></x-input>
     </li>
     <li>
-      <x-input formControlName="password" icon="ado-lock" type="password" iconLayout="left"></x-input>
+      <x-input formControlName="password" icon="ado-lock" type="password" iconLayout="left" placeholder="请输入登录密码"></x-input>
     </li>
     <li class="submit">
       <x-button type="primary" (click)="login()" [loading]="loading">登 录</x-button>
