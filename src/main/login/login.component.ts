@@ -42,27 +42,55 @@ export class LoginComponent implements OnInit {
       let user = this.userForm.value;
       if (user.account && user.password) {
         this.loading = true;
-        var db = app.database();
-        db.collection("Users")
-          .where({
-            Email: user.account
+
+        app
+          .auth({
+            persistence: 'local'
           })
-          .get()
-          .then((res) => {
-            console.log(res.data);
-            if (res.data.length > 0) {//发送激活邮件
-              app
-                .auth({
-                  persistence: 'local'
-                })
-                .signUpWithEmailAndPassword(user.account, user.password)
-                .then(() => {
-                  // 发送验证邮件成功
-                });
-            } else {
-              this.message.warning('请联系管理员为您添加账号!');
-            }
+          .signInWithEmailAndPassword(user.account, user.password)
+          .then((loginState) => {
+            // 登录成功
+            console.log(loginState);
           });
+        // var db = app.database();
+        // db.collection("Users")
+        //   .where({
+        //     Email: user.account
+        //   })
+        //   .get()
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     if (res.data) {
+        //       if (res.data.length > 0) {//发送激活邮件
+        //         app
+        //           .auth({
+        //             persistence: 'local'
+        //           })
+        //           .signUpWithEmailAndPassword(user.account, user.password)
+        //           .then(() => {
+        //             // 发送验证邮件成功
+        //             this.message.warning('账户激活邮件已发送到您的邮箱!');
+        //             db.collection("Users")
+        //               .where({
+        //                 Email: user.account
+        //               }).update({
+        //                 // 表示将 done 字段置为 true
+        //                 EmailSend: true
+        //               })
+        //               .then((res) => {
+        //                 console.log(res);
+        //               });
+        //           });
+        //       } else {
+        //         this.loading = false;
+        //         this.message.warning('请联系管理员为您添加账号!');
+        //       }
+        //     } else {
+        //       this.loading = false;
+        //       this.message.warning('请联系管理员为您添加账号!');
+        //     }
+
+        //   });
         // this.authService.loginTest(user).subscribe(
         //   () => {
         //     if (this.authService.isLoggedIn) {
@@ -79,6 +107,7 @@ export class LoginComponent implements OnInit {
         //   }
         // );
       } else {
+        this.loading = false;
         this.message.warning('用户名或密码不能为空！');
       }
     }
