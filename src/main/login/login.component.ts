@@ -42,70 +42,46 @@ export class LoginComponent implements OnInit {
       let user = this.userForm.value;
       if (user.account && user.password) {
         this.loading = true;
-
         app
           .auth({
             persistence: 'local'
-          })
-          .signInWithEmailAndPassword(user.account, user.password)
-          .then((loginState) => {
-            // 登录成功
+          }).signInWithEmailAndPassword(user.account, user.password).then((loginState) => {
+            // 邮箱密码登录成功
             console.log(loginState);
+            this.loading = false;
+            if (loginState.user) {//登录成功
+              this.message.success('登录成功!');
+              this.authService.loginTest(user).subscribe(
+                () => {
+                  if (this.authService.isLoggedIn) {
+                    // let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : `/${environment.layout}`;
+                    // this.router.navigate([redirect]);
+                    this.router.navigate(['/index']);
+                  }
+                },
+                () => {
+                  this.loading = false;
+                },
+                () => {
+                  this.loading = false;
+                }
+              );
+            }
+          })
+          .catch((error) => {
+            this.loading = false;
+            console.log("登录失败=========" + error);
+            this.message.warning('登录失败，请联系管理员解决!');
           });
-        // var db = app.database();
-        // db.collection("Users")
-        //   .where({
-        //     Email: user.account
-        //   })
-        //   .get()
-        //   .then((res) => {
-        //     console.log(res.data);
-        //     if (res.data) {
-        //       if (res.data.length > 0) {//发送激活邮件
-        //         app
-        //           .auth({
-        //             persistence: 'local'
-        //           })
-        //           .signUpWithEmailAndPassword(user.account, user.password)
-        //           .then(() => {
-        //             // 发送验证邮件成功
-        //             this.message.warning('账户激活邮件已发送到您的邮箱!');
-        //             db.collection("Users")
-        //               .where({
-        //                 Email: user.account
-        //               }).update({
-        //                 // 表示将 done 字段置为 true
-        //                 EmailSend: true
-        //               })
-        //               .then((res) => {
-        //                 console.log(res);
-        //               });
-        //           });
-        //       } else {
-        //         this.loading = false;
-        //         this.message.warning('请联系管理员为您添加账号!');
-        //       }
-        //     } else {
-        //       this.loading = false;
-        //       this.message.warning('请联系管理员为您添加账号!');
-        //     }
 
-        //   });
-        // this.authService.loginTest(user).subscribe(
-        //   () => {
-        //     if (this.authService.isLoggedIn) {
-        //       // let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : `/${environment.layout}`;
-        //       // this.router.navigate([redirect]);
-        //       this.router.navigate(['/index']);
-        //     }
-        //   },
-        //   () => {
-        //     this.loading = false;
-        //   },
-        //   () => {
-        //     this.loading = false;
-        //   }
-        // );
+
+        // .signUpWithEmailAndPassword(user.account, user.password)
+        // .then(() => {
+        //   // 发送验证邮件成功
+        //   this.message.warning('账户激活邮件已发送到您的邮箱!');
+        // });
+
+
       } else {
         this.loading = false;
         this.message.warning('用户名或密码不能为空！');
