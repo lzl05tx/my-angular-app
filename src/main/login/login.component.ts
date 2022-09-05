@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
     password: []
   });
 
+  showLoginTips:boolean = false;
+  loginTips:string="";
+  tipsType:string="tips-warning"
   constructor(
     public authService: AuthService,
     public router: Router,
@@ -47,14 +50,20 @@ export class LoginComponent implements OnInit {
     if (this.loading == false) {
       let user = this.userForm.value;
       if (user.account && user.password) {
+        if(!this.validateAccountPass(user.password)){
+          this.loginTips = "密码长度为8-16位，且必须为字母和数字组合"
+          this.showLoginTips = true;
+          this.tipsType = "tips-warning";
+          return;
+        }
         this.loading = true;
-
-
-
         auth.signUpWithEmailAndPassword(user.account, user.password)
           .then(() => {
             // 发送验证邮件成功
-            this.message.warning('账户激活邮件已发送到您的邮箱!');
+            this.message.success('账户激活邮件已发送到您的邮箱!');
+            this.loginTips = "*账户激活链接已发送到您的邮箱，请前往邮箱点击链接激活账户！"
+            this.showLoginTips = true;
+            this.tipsType = "tips-success";
           }).catch((error) => {
             console.log("错误=======" + error)
             if ((error+"").includes("mail user exist")) {
@@ -118,4 +127,14 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  /**
+   * 验证密码规则
+   */
+
+   validateAccountPass(pass:string) {
+    var passRegex = new RegExp( "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$");
+    return passRegex.test(pass);
+}
+
 }

@@ -13,5 +13,7 @@
     <li class="submit">
       <x-button type="primary" (click)="login()" [loading]="loading">登 录</x-button>
     </li>
+
+    <li class="login-tips" *ngIf="showLoginTips" [ngClass]="tipsType">{{loginTips}}</li>
   </ul>
 </form>

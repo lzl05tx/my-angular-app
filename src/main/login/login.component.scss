@@ -49,6 +49,16 @@ app-login {
           }
         }
       }
+
+      &.tips-warning{
+        max-width: 195px;
+        color: rgb(251, 97, 97);
+      }
+
+      &.tips-success{
+        max-width: 195px;
+        color: rgb(44, 179, 17);
+      }
     }
   }
 }
