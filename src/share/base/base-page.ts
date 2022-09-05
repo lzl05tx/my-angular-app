@@ -17,8 +17,15 @@ export class PageBase {
     this.menu = this.indexService.auth.user.permissions?.menus?.find((x) => x.router == this.indexService.session.activatedPage);
     this.actions = this.indexService.auth.user.permissions?.actions?.filter((x) => x.menuId == this.menu?.id);
     this.actions?.forEach((x) => (this.auth[x.code as string] = true));
+    var User_Account = localStorage.getItem("User_Account")
+    if(User_Account){
+      this.auth["add"]= JSON.parse(User_Account).IsSuperManager;
+    }
   }
 
+  _baseInit(){
+
+  }
   unAuth(code?: string): boolean {
     return !this.auth[code as string];
   }

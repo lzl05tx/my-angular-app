@@ -1,5 +1,5 @@
 <x-inner class="au-inner">
-  <div class="au-panel au-tree-left" [x-loading]="treeLoading">
+  <!-- <div class="au-panel au-tree-left" [x-loading]="treeLoading">
     <h4>组织机构</h4>
     <x-tree
       #treeCom
@@ -11,7 +11,7 @@
       (activatedChange)="action('tree-info', $event)"
     >
     </x-tree>
-  </div>
+  </div> -->
   <div class="au-table-right">
     <au-tool>
       <x-button type="primary" icon="fto-plus" [disabled]="!auth['add']" (click)="auth['add'] && action('add')">新增</x-button>
@@ -28,7 +28,7 @@
       [bodyColumnTpl]="{ actions: actionsTpl }"
       [adaptionHeight]="128"
       virtualScroll
-      loading
+      [loading] = 'usersLoading'
     ></x-table>
   </div>
 </x-inner>

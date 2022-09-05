@@ -113,7 +113,15 @@ export class AuthService {
               icon: 'fto-menu',
               pid: '3',
               path: '3.7'
-            }
+            },
+            // {
+            //   id: '7',
+            //   label: '任务管理',
+            //   router: 'dashboard',
+            //   icon: 'fto-menu',
+            //   pid: null,
+            //   path: '2'
+            // },
           ]
         }
       };

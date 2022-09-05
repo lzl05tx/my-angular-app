@@ -81,6 +81,7 @@ export class LoginComponent implements OnInit {
                         console.log(res.data);
                         if (res.data) {
                           if (res.data.length > 0) {//本地库中有此用户
+                            localStorage.setItem("User_Account",JSON.stringify(res.data[0]));
                             this.loginSkip(user);
                           } else {//本地库中没有此用户
                             this.message.warning("请联系管理员为您添加账号！");

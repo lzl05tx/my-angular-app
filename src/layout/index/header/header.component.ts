@@ -20,7 +20,9 @@ export class HeaderComponent implements OnInit {
     public nav: NavService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   action(type: string) {
     switch (type) {

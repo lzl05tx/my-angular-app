@@ -103,6 +103,16 @@ export const layoutRoutes: Routes = [
     }
   },
 
+    // 用户管理
+    {
+      path: 'tasklist',
+      loadChildren: () => import('../main/dashboard/dashboard.module').then((x) => x.DashboardModule),
+      canLoad: [AuthGuard],
+      data: {
+        shouldReuse: true
+      }
+    },
+
   // 示例功能
   // { path: 'examples', loadChildren: 'src/main/examples/example.module#ExampleModule', canLoad: [AuthGuard] },
   // // 工作型首页

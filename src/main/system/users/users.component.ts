@@ -27,6 +27,8 @@ export class UsersComponent extends PageBase {
       tap(() => (this.treeLoading = false)),
       map((x) => x.list)
     );
+
+    usersLoading = false;
   selected!: Organization;
   columns: XTableColumn[] = [
     { id: 'index', label: '序号', width: 80, left: 0, type: 'index' },
@@ -50,6 +52,7 @@ export class UsersComponent extends PageBase {
   ) {
     super(indexService);
   }
+
 
   action(type: string, item?: any) {
     switch (type) {

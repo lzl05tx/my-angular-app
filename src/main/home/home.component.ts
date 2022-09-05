@@ -13,6 +13,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class HomeComponent {
   value: any;
+  UserName:string = "";
+
   // items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`);
-  constructor() {}
+  constructor() {
+
+  }
+
+  ngOnInit() {
+    var User_Account = localStorage.getItem("User_Account")
+    if(User_Account){
+      this.UserName = JSON.parse(User_Account).Email;
+    }
+  }
 }
