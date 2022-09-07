@@ -6,6 +6,7 @@ import { ShareModule } from 'src/share/share.module';
 import { AuToolModule } from 'src/share/tool/tool.module';
 import { AuAdaptionModule } from 'src/share/adaption/adaption.module';
 import { NgNestModule } from 'src/share/ng-nest.module';
+import { TaskDetailComponent } from './taskdetail/task-detail.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { NgNestModule } from 'src/share/ng-nest.module';
     AuAdaptionModule,
     TaskListRoutesModule
   ],
-  declarations: [TaskListComponent]
+  declarations: [TaskListComponent,TaskDetailComponent]
 })
 export class TaskListModule {}

@@ -106,7 +106,7 @@ export const layoutRoutes: Routes = [
     // 用户管理
     {
       path: 'tasklist',
-      loadChildren: () => import('../main/dashboard/dashboard.module').then((x) => x.DashboardModule),
+      loadChildren: () => import('../main/tasks/tasklist.module').then((x) => x.TaskListModule),
       canLoad: [AuthGuard],
       data: {
         shouldReuse: true

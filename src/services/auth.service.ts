@@ -114,6 +114,14 @@ export class AuthService {
               pid: '3',
               path: '3.7'
             },
+            {
+              id: '8',
+              label: '任务管理',
+              router: 'tasklist',
+              icon: 'fto-menu',
+              pid: null,
+              path: '4'
+            },
             // {
             //   id: '7',
             //   label: '任务管理',
