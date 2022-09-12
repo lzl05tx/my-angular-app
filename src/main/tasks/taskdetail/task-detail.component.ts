@@ -14,60 +14,67 @@ export class TaskDetailComponent implements OnInit {
   id!: string | null;
   type!: string | null;
   config = {
-    labelWidth: '6rem'
+    labelWidth: '8rem'
   };
   taskIconSrc: string = "";
+  taskIntroList:any[]=[];
+  introIndex:number = 1;
   controls: XControl[] = [
     {
       control: 'input',
       id: 'account',
-      label: '任务图标',
+      label: '任务标题',
       required: true,
       maxlength: 16,
-      pattern: /^[A-Za-z0-9]{4,16}$/,
-      message: '只能包括数字、字母的组合，长度为4-16位'
+      message: ''
     },
     {
       control: 'input',
       id: 'password',
-      label: '任务标题',
-      type: 'password',
+      label: '任务佣金（元）',
+      labelWith:'8rem',
+      type: 'cascade',
       required: true,
-      maxlength: 16,
-      pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$/,
-      message: '密码中必须包含字母和数字，长度为6-16位'
-    },
-    { control: 'input', id: 'name', label: '姓名', required: true },
-    {
-      control: 'find',
-      id: 'organizations',
-      label: '组织机构',
-      required: true,
-      multiple: true,
-    },
-    {
-      control: 'find',
-      id: 'roles',
-      label: '角色',
-      required: true,
-      multiple: true,
+      pattern: /^(([1-9]{1}\d*)|(0{1}))(\.\d{1,2})?$/,
+      message: '请填写正确金额格式'
 
-      tableColumns: [
-        { id: 'index', label: '序号', width: 80, left: 0, type: 'index' },
-        { id: 'name', label: '角色名称', flex: 1, sort: true }
-      ],
-      tableRowHeight: 35,
-      treeTableConnect: 'organizationId'
     },
-    { control: 'input', id: 'email', label: '邮箱' },
-    { control: 'input', id: 'phone', label: '电话' },
+    // {
+    //   control: 'input',
+    //   id: 'name',
+    //   label: '姓名',
+    //   required: true
+    // },
+    // {
+    //   control: 'find',
+    //   id: 'organizations',
+    //   label: '组织机构',
+    //   required: true,
+    //   multiple: true,
+    // },
+    // {
+    //   control: 'find',
+    //   id: 'roles',
+    //   label: '角色',
+    //   required: true,
+    //   multiple: true,
+
+    //   tableColumns: [
+    //     { id: 'index', label: '序号', width: 80, left: 0, type: 'index' },
+    //     { id: 'name', label: '角色名称', flex: 1, sort: true }
+    //   ],
+    //   tableRowHeight: 35,
+    //   treeTableConnect: 'organizationId'
+    // },
+    // { control: 'input', id: 'email', label: '邮箱' },
+    // { control: 'input', id: 'phone', label: '电话' },
     { control: 'input', id: 'id', hidden: true, value: this.setting.guid() }
   ];
 
   @ViewChild('form') form!: XFormComponent;
 
   get formInvalid() {
-    return this.form?.formGroup?.invalid;
+    return this.form?.formGroup?.invalid || !this.taskIconSrc ||this.introIndex==1;
   }
 
   get disabled() {
@@ -103,6 +110,10 @@ export class TaskDetailComponent implements OnInit {
 
   action(type: string | null) {
     switch (type) {
+      case 'addintro'://增加任务说明
+      this.taskIntroList.push({introTitle:"请填写操作说明:"+this.introIndex,introImage:"请添加操作说明"+this.introIndex+"截图"});
+      this.introIndex++;
+      break;
       // case 'info':
       //   this.service
       //     .get(this.id as string)
@@ -168,9 +179,9 @@ export class TaskDetailComponent implements OnInit {
     reader.readAsDataURL(file);
     //监听文件读取结束后事件
     reader.onloadend =
-      (e: ProgressEvent<FileReader>) =>{
+      (e: ProgressEvent<FileReader>) => {
         this.taskIconSrc = <string>e.target?.result;
         this.cdr.detectChanges();
-      } ;
+      };
   }
 }

@@ -9,6 +9,12 @@
     </x-buttons>
   </au-tool>
 
+
+    <x-form #form class="au-panel au-overflow-auto" au-adaption [outerHeight]="86" [disabled]="disabled"
+    [controls]="controls" direction="row" labelSuffix=":" labelWidth="8rem" width="24rem" labelAlign="start" span="20"
+    space="2" style="padding-left: 20px;">
+
+
   <div class="add-icon-title"><span class="red-star">*</span>添加任务图标</div>
   <div class="task-icon-bg">
     <img class="task-icon" *ngIf="taskIconSrc" src="{{taskIconSrc}}" alt="">
@@ -18,7 +24,22 @@
     </label>
   </div>
 
-  <x-form #form class="au-panel au-overflow-auto" au-adaption [outerHeight]="86" [disabled]="disabled"
-    [controls]="controls" direction="row" labelSuffix=":" labelWidth="6rem" width="24rem" labelAlign="end" span="20"
-    space="2"></x-form>
+  
+    <div class="add-intro-title-bg" style="display: flex;">
+      <div class="add-icon-title" style="line-height: 50px;">请添加任务操作说明：</div>
+      <div class="add-intro-btn" (click)="action('addintro')">+</div>
+    </div>
+
+
+    <div *ngFor="let item of taskIntroList">
+      <div class="intro-title">{{item.introTitle}}</div>
+      <textarea class="intro-write"></textarea>
+      <div class="intro-image">{{item.introImage}}</div>
+      <label htmlFor="uploadImage">
+        <input type="file" accept="image/*" (change)="sendImg($event)" id="uploadImage" hidden>
+        <img class="task-icon" src="assets/img/addimg.png">
+      </label>
+    </div>
+
+  </x-form>
 </x-inner>
